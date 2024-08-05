@@ -37,7 +37,6 @@ function CreateBlog() {
             console.warn('User not found in session ID!');
         }
     }, []);
-
    
     const onCreate = async () => {
         const result = await createBlog(title, content, userId, categoryId);

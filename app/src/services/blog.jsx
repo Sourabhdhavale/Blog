@@ -59,3 +59,9 @@ export async function deleteBlog(blogId) {
   console.log("Get delete blogs in service:"+ response);
   return response.data;
 }
+export async function getSearchedBlog(blogTitle) {
+  const response = await axios.get(`${config.url}/blog/searchBlog`, { params: { blogTitle } });
+  console.log("Get searched blogs in service:"+JSON.stringify(response.data.data,2));
+
+    return response.data;
+}

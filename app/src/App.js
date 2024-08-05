@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AddCategory from './pages/addCategory';
 import ShowCategories from './pages/showCategories';
 import ViewBlogDetails from './pages/viewBlogDetails';
+import SearchBlog from './pages/searchBlog';
 
 
 
@@ -27,7 +28,8 @@ function App() {
         <Route path='/createblog' element={<CreateBlog />} />
         <Route path='/addCategory' element={<AddCategory />} />
         <Route path='/showCategories' element={<ShowCategories />} />
-        <Route path='/viewBlogDetails/:blogId' element={<ViewBlogDetails/>}/>
+        <Route path='/viewBlogDetails/:blogId' element={<ViewBlogDetails />} />
+        <Route path='/searchBlog' element={<SearchBlog/>}/>
       </Routes>
       
       <ToastContainer />

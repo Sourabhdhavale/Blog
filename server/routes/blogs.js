@@ -83,5 +83,16 @@ router.get('/getBlogDetails', (request, response) => {
     console.log("blog details:" +blog)
     response.send(utils.createResult(error,blog))
   })
+})
+  
+router.get('/searchBlog', (request, response) => {
+  
+  const statement = `select b.blog_id, b.title as blog_title, c.title as category_title from blogs b join categories c on b.category_id = c.category_id where b.title LIKE ? order by b.blog_id`
+  db.pool.query(statement, [`%${request.query.blogTitle}%`], (error, blogs) => {
+    console.log("Get searched blogs in router: " + JSON.stringify(blogs,2));
+    console.log("Get searched blogs error in router: "+error);
+
+    response.send(utils.createResult(error, blogs))
   })
+})
 module.exports = router

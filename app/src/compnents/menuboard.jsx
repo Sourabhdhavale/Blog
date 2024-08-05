@@ -8,7 +8,7 @@ function MenuBoard() {
                     <Link className='me-3' to='/addCategory'>Add Category</Link><br />
                     <Link className='me-3' to='/showCategories'>Show Categories</Link><br />
                     <Link className='me-3' to='/createblog'>Add Blog</Link><br />
-                    <Link className='me-3'>Search Blogs blog</Link><br />
+                    <Link className='me-3' to='/searchBlog'>Search Blogs</Link><br />
             <Link className='me-3' to='/login'>Log out</Link><br />
             </div>
     )
