@@ -17,18 +17,29 @@ function Login() {
       toast.warning('enter email')
     } else if (password.length === 0) {
       toast.warning('enter password')
-    } else {
+    }
+    else
+    {
       const result = await login(email, password)
-      if (result['status'] === 'success') {
-        const id = result['data'][0].id;
-
-        sessionStorage.setItem('id', id);
-        toast.success('Welcome to the application')
-          navigate('/home');
-      }
-      else {
-        toast.error('Invalid email or password')
-      }
+      if (result['status'] === 'success')
+        {
+            // read the token
+            console.log("OnLogin: "+JSON.stringify(result.data,2));
+            // const token = result['data']['token']
+            // const name = result['data']['name']
+            const { token, id,name } = result['data']
+    
+            sessionStorage.setItem('token', token)
+            sessionStorage.setItem('id', id);
+            sessionStorage.setItem('name', name)
+    
+            toast.success('welcome to the application')
+            navigate('/home')
+          }
+          else
+          {
+            toast.error('invalid email or password')
+          }
     }
   }
     return (

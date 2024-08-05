@@ -1,6 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 function MenuBoard() {
+    const navigate = useNavigate();
+    const onLogout = () => {
+        sessionStorage.removeItem('token');
+        navigate('/login')
+    }
     return (
         <div>
             <Link className='me-3' to='/viewMyBlogs'>My blogs</Link><br />
@@ -9,7 +14,7 @@ function MenuBoard() {
                     <Link className='me-3' to='/showCategories'>Show Categories</Link><br />
                     <Link className='me-3' to='/createblog'>Add Blog</Link><br />
                     <Link className='me-3' to='/searchBlog'>Search Blogs</Link><br />
-            <Link className='me-3' to='/login'>Log out</Link><br />
+            <button className='btn btn-success' onClick={onLogout}>Logut</button><br />
             </div>
     )
 }

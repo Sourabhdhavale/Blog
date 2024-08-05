@@ -8,7 +8,7 @@ function Home() {
     useEffect(() => {
         const fetchAllBlogs = async () => {
             const response = await getAllBlogs();
-            console.log("fet all blogs:"+JSON.stringify(response.data,2,null));
+            console.log("fet all blogs:"+JSON.stringify(response.data,2));
             setAllBlogs(response['data']);
         };
         fetchAllBlogs();

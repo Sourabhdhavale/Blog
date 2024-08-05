@@ -5,7 +5,7 @@ function Action({blogId,onDelete}) {
     return (
         <div>
             <Link to={`/editblog/${blogId}`}>Edit</Link>
-            <button className="btn btn-danger" onClick={()=> onDelete(blogId)}></button>
+            <button className="btn btn-danger" onClick={()=> onDelete(blogId)}>Delete</button>
         </div>
     )
 }

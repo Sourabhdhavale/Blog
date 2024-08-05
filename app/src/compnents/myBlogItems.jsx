@@ -6,7 +6,7 @@ function MyBlogItems({ myblogs,onDelete }) {
         <>
         {
             myblogs.map((blog) => (
-                <tr>
+                <tr key={blog.blog_id}>
                     <td>{blog.blog_id}</td>
                     <td><Link to={`/viewBlogDetails/${blog.blog_id}`}>{blog.blog_title}</Link></td>
                     <td>{blog.category_title}</td>

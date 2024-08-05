@@ -17,6 +17,7 @@ function ViewBlogDetails() {
     useEffect(() => {
         const fetchBlogDetails = async () => {
             const response = await getBlogDetails(blogId);
+            console.log("fetch blog detail response: "+JSON.stringify(response));
             const blogData = response.data[0];
             setBlog(blogData);
         };
@@ -59,7 +60,7 @@ function ViewBlogDetails() {
                             </div>
                             <div className="col">
                                 <input type="text"
-                                    value={blogId}  readOnly
+                                    value={blogId || ''}  readOnly
                                 />
                             </div>
                         </div>
@@ -70,34 +71,11 @@ function ViewBlogDetails() {
                             </div>
                             <div className="col">
                                 <input type="text"
-                                    value={blog.title} readOnly
+                                    value={blog.title || ''}  readOnly
                                 />
                             </div>
                         </div>
-                        {/* Third row
-                        <div className="row mb-3">
-                            <div className="col-2">
-                                <label htmlFor="">Category:</label>
-                            </div>
-                            <div className="col">
-                            <div class="dropdown">
-                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {categoryId ? categories.find(cat => cat.category_id === categoryId)?.title : 'Select Category'}
-                                        
-                                    </button>
-                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        {categories.map(category => (
-                                            <li key={category.category_id}>
-                                                <button className="dropdown-item" onClick={() => setCategoryId(category.category_id)}>
-                                                    {category.title}
-                                                </button>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div> */}
-                        {/* Fourth row */}
+                       
                         <div className="row">
                             <textarea value={blog.content || ''}
                                 readOnly></textarea>

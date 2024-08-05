@@ -2,12 +2,52 @@ const express = require('express')
 const cors = require('cors')
 const config = require('./config')
 const utils = require('./utils')
-
+const jwt = require('jsonwebtoken');
 const app = express()
 app.use(cors())
 app.use(express.json())
 
+app.use((request, response,next) => {
+  //Check if token is required for API
+  console.log("Reuqest URl: "+request.url);
+  if (request.url === '/user/login' || request.url === '/user/register') {
+    //skip verifying token
+    next();
+  } 
+  else {
+    console.log("request header:"+request.headers.token);
+    //Get a token
+    const token = request.headers['token'];
 
+    if (!token || token.length === 0) {
+      console.log("payload id:" +token);
+
+      response.send(utils.createErrorResult('Missing token!'));
+    }
+    else {
+      try {
+        //verify token
+        const payload = jwt.verify(token, config.secret)
+        //Add u ser id to the request
+        console.log("payload id:"+payload.id);
+        request.id = payload['id'];
+        //Add Epxiry logic
+        
+        //calll the next route
+        next();
+      }
+      catch (ex) {
+        if (error.name === 'TokenExpiredError') {
+          console.log("Error anam"+error.name);
+          response.status(401).send(utils.createErrorResult("Token expired!"));
+        }
+        else {
+          response.send(utils.createErrorResult("Invalid Token!"));
+        }
+      }
+    }
+  }
+})
 // add the routes
 const userRouter = require('./routes/user')
 const categoryRouter = require('./routes/category')

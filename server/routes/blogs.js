@@ -5,6 +5,7 @@ const utils = require('../utils')
 const router = express.Router()
 
 router.post('/createBlog', (request, response) => {
+  console.log("Create blog request body: "+request.body);
     const { title, content, userId, categoryId } = request.body
     const statement = `insert into blogs(title, content, user_id, category_id) values (? ,?, ?, ?);`
   
@@ -59,7 +60,7 @@ router.put('/editBlog', (request, response) => {
 
 router.get('/getMyBlogs', (request, response) => {
   
-  const statement = `select b.blog_id, b.title as blog_title, c.title as category_title from blogs b join categories c on b.category_id = c.category_id where b.user_id = ? order by b.blog_id`
+  const statement = `select b.blog_id, b.title as blog_title, COALESCE(c.title, 'Uncategorized') AS category_title from blogs b join categories c on b.category_id = c.category_id where b.user_id = ? order by b.blog_id`
   db.pool.query(statement, [request.query.userId], (error, blogs) => {
     // console.log(blogs);
     response.send(utils.createResult(error, blogs))
@@ -68,16 +69,14 @@ router.get('/getMyBlogs', (request, response) => {
 
 
 router.get('/getAllBlogs', (request, response) => {
-  const statement = `select b.blog_id, b.title as blog_title, c.title as category_title from blogs b join categories c on b.category_id = c.category_id order by b.blog_id`;
+  const statement = `select b.blog_id, b.title as blog_title, COALESCE(c.title, 'Uncategorized') AS category_title from blogs b left join categories c on b.category_id = c.category_id order by b.blog_id`;
   db.pool.query(statement, (error, categories) => {
     console.log("Get alll blogs in router epxress:"+ categories);
       response.send(utils.createResult(error, categories))
     })
   })
 
-router.get('/getBlogDetails', (request, response) => {
-  // console.log(request.query)
-  // const statement = `select b.blog_id, b.title as blog_title, b.content,c.title as category_title from blogs b join categories c on b.category_id = c.category_id where b.blog_id=?`;
+router.get('/getBlogDetails', (request, response) => {  
   const statement = `select blog_id,title,content,category_id from blogs where blog_id=?`;
   db.pool.query(statement, [request.query.blogId], (error, blog) => {
     console.log("blog details:" +blog)
