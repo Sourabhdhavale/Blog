@@ -7,29 +7,42 @@ import CategoryList from "../compnents/categoryList";
 
 function ShowCategories() {
     const [category, setCategory] = useState([]);
-  const [categoryId, setCategoryId] = useState('');
-
+    // const [categoryId, setCategoryId] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     useEffect(() => {
         const loadCategories = async () => {
+          try
+          {
             const response = await getCategories();
-            if (response.status === 'success') {
-              console.log("get categories:" + JSON.stringify(response.data, 2));
+            if (response.status === 'success')
+            {
               const result= response.data
               setCategory(result);
-              
             }
-            else {
-                toast.error("Something went wrong!");
+            else
+            {
+              toast.error("Failed to fetch categories.");
             }
+          }
+          catch (error)
+          {
+            toast.error('Something went wrong!');
+            setError(error);
+          }
+          finally {
+            setLoading(false);
+          }
         };
         loadCategories();
     }, []);
 
-  const onHandleDelete = async(categoryId) => {
+const onHandleDelete = async(categoryId) => {
     const response = await deleteCategory(categoryId);
+
     if (response.status === 'success') {
       setCategory(category.filter(c => c.category_id !== categoryId));
-  toast.success("Category deleted successfully.");
+      toast.success("Category deleted successfully.");
   }
   else
   {
@@ -43,13 +56,11 @@ function ShowCategories() {
           <div className="row mt-5">
             <div className="col-2"><MenuBoard/></div>
             <div className="col">
-    
-              <table className="table table-bordered table-striped table-info " style={{fontSize:"18px"}}>
+            {loading ? (<h1>Loading...</h1>): error ? (<div className="alert alert-danger">Error loading categories.</div>): category.length === 0 ? (<div className="alert alert-success">No category found.</div>):(<table className="table table-bordered table-striped table-info " style={{fontSize:"18px"}}>
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Title</th>
-                        <th>Description</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -58,7 +69,8 @@ function ShowCategories() {
                           return <CategoryList category={c} onDelete={onHandleDelete} />
                         })}
                 </tbody>
-              </table>
+              </table>)}
+              
             </div>
             <div className="col-2"></div>
           </div>

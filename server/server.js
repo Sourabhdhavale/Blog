@@ -31,14 +31,13 @@ app.use((request, response,next) => {
         //Add u ser id to the request
         console.log("payload id:"+payload.id);
         request.id = payload['id'];
-        //Add Epxiry logic
-        
-        //calll the next route
+      
+        //call the next route
         next();
       }
-      catch (ex) {
+      catch (error) {
+        //Token expiry logic
         if (error.name === 'TokenExpiredError') {
-          console.log("Error anam"+error.name);
           response.status(401).send(utils.createErrorResult("Token expired!"));
         }
         else {

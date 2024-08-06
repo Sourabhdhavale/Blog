@@ -5,7 +5,6 @@ function CategoryList({category,onDelete}) {
         <tr>
             <td>{category.category_id}</td>
             <td>{category.title}</td>
-            <td>{category.description}</td>
             <td><button className="btn btn-danger" onClick={()=>onDelete(category.category_id)}>delete</button></td>
     </tr>
     )

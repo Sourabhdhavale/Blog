@@ -62,7 +62,6 @@ export async function getAllBlogs() {
       token
     }
   });
-  console.log("Get alll blogs in service:"+ JSON.stringify(response,2));
   return response.data;
 }
 
@@ -73,9 +72,9 @@ export async function deleteBlog(blogId) {
   return response.data;
 }
 export async function getSearchedBlog(blogTitle) {
+  console.log("BLog title: "+blogTitle);
   const token = sessionStorage.getItem('token')
   const response = await axios.get(`${config.url}/blog/searchBlog`, { params: { blogTitle } , headers:{token,}});
   console.log("Get searched blogs in service:"+JSON.stringify(response.data.data,2));
-
     return response.data;
 }

@@ -7,27 +7,54 @@ import { toast } from 'react-toastify';
 
 function ViewBlogs() {
     const [myblogs, setMyblogs] = useState([]);
-
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
     const userId = sessionStorage.getItem('id');
 
     useEffect(() => {
         const loadMyBlogs = async () => {
+            try {
             const result = await getMyblogs(userId);
-            setMyblogs(result['data']);
-            console.log("getMyBlog:" + JSON.stringify(result['data'],2,null));
+            if (result.status === 'success') {
+                setMyblogs(result['data']);
+            }
+            else {
+                setError('Failed to load blogs.');
+                toast.error('Failed to load blogs!');
+            }
+            }
+            catch (error) {
+                setError('Failed to load blogs.');
+                toast.error('Failed to load blogs.')
+            }
+            finally {
+                setLoading(false);
+            }
         };
-        loadMyBlogs();
+        if (userId) {
+            loadMyBlogs();
+        }
+        else {
+            setLoading(false);
+            setError('User not found.');
+            toast.error('User not found.');
+        }
     }, [])
 
     const onHandleDelete = async (blogId) => {
-        const response = await deleteBlog(blogId);
+        try {
+            const response = await deleteBlog(blogId);
         console.log("on delete:"+JSON.stringify(response,2,null));
         if (response.status === 'success') {
             setMyblogs(myblogs.filter(blog => blog.blog_id !== blogId));
         toast.success("Blog deleted successfully.");
         }
         else {
-            toast.error("Blog not deleted.")
+            toast.error("Failed to delete blog.")
+        }
+        }
+        catch (error) {
+            toast.error('Failed to delete blog.')
         }
     }
     return (
@@ -40,7 +67,7 @@ function ViewBlogs() {
                     </div>
 
                     <div className="col">
-                        <div className="table table-bordered">
+                        {loading ? (<h1>Loading...</h1>) : error ? (<div className="alert alert-danger">{error}.</div>):myblogs.length===0?(<div className="alert alert-success">No blog found.</div>):( <div className="table table-bordered">
                             <table>
                                 <thead>
                                     <tr>
@@ -54,7 +81,7 @@ function ViewBlogs() {
                                     <MyBlogItems myblogs={myblogs} onDelete={onHandleDelete} />
                                 </tbody>
                             </table>
-                        </div>
+                        </div>)}
                     </div>
                 </div>
             </div>

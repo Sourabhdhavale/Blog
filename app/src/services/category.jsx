@@ -8,12 +8,11 @@ export async function getCategories() {
   return response.data;
 }
 
-export async function addCategory(title, description) {
+export async function addCategory(title) {
   const token = sessionStorage.getItem('token');
 console.log("oken: "+token);
   const body = {
-    title,
-    description
+    title
   }
   const response = await axios.post(`${config.url}/category/addCategory`, body,{headers:{token}});
   console.log("add category service respnse: " + JSON.stringify(response));

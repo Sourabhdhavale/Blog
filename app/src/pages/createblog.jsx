@@ -10,19 +10,17 @@ function CreateBlog() {
     const [userId, setUserId] = useState('');
     const [categoryId, setCategoryId] = useState('');
     const [categories, setCategories] = useState([]); 
-    
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
                 const response = await getCategories();
-                console.log("get category response:"+response)
                 setCategories(response.data);
-                console.log(response.data);
             } catch (error) {
-                console.log(error);
                 console.error('Error fetching categories:', error);
+                toast.error('Failed to fetch categories.');
             }
         };
 
@@ -34,11 +32,19 @@ function CreateBlog() {
             setUserId(storedUserId);
         }
         else {
-            console.warn('User not found in session ID!');
+            console.error('User not found in session ID!');
         }
     }, []);
    
     const onCreate = async () => {
+        if (title.trim() === '' || content.trim() === '' || isNaN(categoryId) || categoryId=== '') {
+            toast.warning('Please fill out all fields.');
+            return;
+        }
+
+        setLoading(true);
+        
+        try {
         const result = await createBlog(title, content, userId, categoryId);
         console.log("Create blong response:"+result)
         if (result['status'] === 'success') {
@@ -47,7 +53,16 @@ function CreateBlog() {
         } else {
           toast.error('Failed to create blog.')
         }
+        }
+        catch (error) {
+            console.error("Error adding category:", error);
+            toast.error("An error occurred while adding the category.");
+        }
+        finally {
+            setLoading(false);
+        }
     }
+
     const handleCancel = () => {
         navigate('/viewMyBlogs');
     }
@@ -67,7 +82,8 @@ function CreateBlog() {
                                 onChange={(e) => {
                                     setTitle(e.target.value)
                                     }}
-                                maxLength={5000}/>
+                                    maxLength={5000}
+                                    disabled={loading}/>
                             </div>
                         </div>
                         <div className="row">
@@ -77,20 +93,20 @@ function CreateBlog() {
                             <textarea name="" id="" cols="30" rows="10" maxLength={1000000} className="form-control"
                             onChange={(e) => {
                                 setContent(e.target.value)
-                                }}></textarea>
+                                }} disabled={loading}></textarea>
                         </div>
                         <div className="row">
                             <div className="col-3">Category:</div>
                             <div className="col">
                                 <div class="dropdown">
-                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" disabled={loading}>
                                         {categoryId ? categories.find(cat => cat.category_id === categoryId)?.title : 'Select Category'}
-                                        
+                                
                                     </button>
                                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         {categories.map(category => (
                                             <li key={category.category_id}>
-                                                <button className="dropdown-item" onClick={() => setCategoryId(category.category_id)}>
+                                                <button className="dropdown-item" onClick={() => setCategoryId(category.category_id)} disabled={loading}>
                                                     {category.title}
                                                 </button>
                                             </li>
@@ -101,7 +117,7 @@ function CreateBlog() {
                         </div>
                         <div className="row">
     <div className="col-2">
-        <button className="btn btn-success" onClick={onCreate}>Create</button>
+        <button className="btn btn-success" onClick={onCreate}>{loading ? 'Creating...' : 'Create'}</button>
     </div>
     <div className="col-2">
         <button className="btn btn-danger" onClick={handleCancel}>Cancel</button>

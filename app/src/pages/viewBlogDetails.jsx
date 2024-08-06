@@ -16,30 +16,34 @@ function ViewBlogDetails() {
 
     useEffect(() => {
         const fetchBlogDetails = async () => {
-            const response = await getBlogDetails(blogId);
-            console.log("fetch blog detail response: "+JSON.stringify(response));
-            const blogData = response.data[0];
-            setBlog(blogData);
+            try {
+                const response = await getBlogDetails(blogId);
+                console.log("fetch blog detail response: " + JSON.stringify(response));
+                const blogData = response.data[0];
+                setBlog(blogData);
+            }
+            catch (error) {
+                toast.error('Failed to fetch blog details.');
+            }
         };
         const fetchCategories = async () => {
             try {
                 const response = await getCategories();
-                console.log("get category response:"+response)
+                console.log("get category response:" + response)
                 setCategories(response.data);
-                console.log(response.data);
             } catch (error) {
-                console.log(error);
-                console.error('Error fetching categories:', error);
+                toast.error('Failed to fetch categories.');
             }
         };
         fetchCategories();
         fetchBlogDetails();
     }, []);
+
     const location = useLocation();
     const currentUrl = window.location.href;
-    console.log("current url: "+currentUrl);
+    console.log("current url: " + currentUrl);
     const currentPathname = location.pathname;
-    console.log("current pathname:"+currentPathname );
+    console.log("current pathname:" + currentPathname);
     const onBack = async () => {
         navigate('/home')
     }
@@ -60,7 +64,7 @@ function ViewBlogDetails() {
                             </div>
                             <div className="col">
                                 <input type="text"
-                                    value={blogId || ''}  readOnly
+                                    value={blogId || ''} readOnly
                                 />
                             </div>
                         </div>
@@ -71,24 +75,24 @@ function ViewBlogDetails() {
                             </div>
                             <div className="col">
                                 <input type="text"
-                                    value={blog.title || ''}  readOnly
+                                    value={blog.title || ''} readOnly
                                 />
                             </div>
                         </div>
-                       
+
                         <div className="row">
                             <textarea value={blog.content || ''}
                                 readOnly></textarea>
                         </div>
                         <div className="row">
-    <div className="col-2">
-        <button className="btn btn-success" onClick={onBack}>Back</button>
-    </div>
-  
-</div>
+                            <div className="col-2">
+                                <button className="btn btn-success" onClick={onBack}>Back</button>
+                            </div>
+
+                        </div>
                     </div>
 
-                    
+
                 </div>
             </div>
         </div>

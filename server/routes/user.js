@@ -34,7 +34,7 @@ router.post('/login', (request, response) => {
       else {
         const user = users[0];
         const payload = { id: user.id };
-        const token = jwt.sign(payload, config.secret,{expiresIn:'30m'});
+        const token = jwt.sign(payload, config.secret,{expiresIn:'1d'});
         const userData = {
           token,
           id:`${user.id}`,

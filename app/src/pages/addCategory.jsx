@@ -6,10 +6,17 @@ import { toast } from "react-toastify";
 
 function AddCategory() {
     const [title, setTitle] = useState('');
-    const [details, setDetail] = useState('');
+    const [loading,setLoading] = useState(false)
     const navigate = useNavigate();
+
     const onAddCategory = async () => {
-        const response = await addCategory(title, details);
+        if (title.trim() === '') {
+            toast.warning('Please enter a category title.');
+            return;
+        }
+        setLoading(true)
+        try {
+        const response = await addCategory(title);
         console.log("add category:"+JSON.stringify(response,2));
         if (response.status === 'success') {
             toast.success("Category addded.");
@@ -18,6 +25,13 @@ function AddCategory() {
         else
         {
             toast.error("Category not added!")
+        }
+        }
+        catch (error) {
+            toast.error("An error occurred while adding the category.");
+        }
+        finally {
+            setLoading(false)
         }
     }
 
@@ -41,16 +55,9 @@ function AddCategory() {
                     }} />
                 </div>
                 </div>
-
-                <div className="row"><div className="mb-3 " >
-                    <label htmlFor="">Detail</label>
-                    <input type="text" className="form-control" onChange={(e) => {
-                        setDetail(e.target.value)
-                    }} />
-                </div></div>
                     <div className="row">
                         <div className="col-6">
-                        <button className="btn btn-primary mt-3" onClick={onAddCategory}>ADD</button>
+                        <button className="btn btn-primary mt-3" onClick={onAddCategory}>{loading ? 'Adding' : 'Add'}</button>
                         </div>
                         <div className="col-6">
                             <button className="btn btn-danger" onClick={onCancelCategory}>Cancel</button>

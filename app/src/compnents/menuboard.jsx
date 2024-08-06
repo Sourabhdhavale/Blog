@@ -1,9 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function MenuBoard() {
     const navigate = useNavigate();
     const onLogout = () => {
         sessionStorage.removeItem('token');
+        toast.success('Successfully logged out.')
         navigate('/login')
     }
     return (

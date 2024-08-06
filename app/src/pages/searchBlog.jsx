@@ -4,19 +4,35 @@ import MyBlogItems from "../compnents/myBlogItems";
 import { getAllBlogs, getBlogDetails, getSearchedBlog } from "../services/blog";
 import AllBlogItems from "../compnents/allBlogItems";
 import SearchBlogItems from "../compnents/searchBlogItem";
+import { toast } from "react-toastify";
 
 function SearchBlog() {
     const [blogTitle, setBlogTitle] = useState('');
     const [searchedBlogs, setSearchedBlogs] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-        const fetchBlogByTitle = async () => {
+    const fetchBlogByTitle = async () => {
+        setLoading(true);
+        setError(null);
+        try {
             const response = await getSearchedBlog(blogTitle);
-            console.log("fet searched blogs:"+JSON.stringify(response.data,2));
-            setSearchedBlogs(response['data']);
+            setSearchedBlogs(response['data']); 
+        }
+        catch (err) {
+            toast.error('Failed to fetch blogs.');
+            setError(err);
+        }
+        finally {
+            setLoading(false);
+        }
         };
 
-
     const onSearch = () => {
+        if (blogTitle.trim() === '') {
+            toast.error('Please enter a search term!');
+            return;
+        }
         fetchBlogByTitle();
     }
     return (
@@ -40,11 +56,12 @@ function SearchBlog() {
                                 />
                             </div>
                             <div className="col">
-                            <button className="btn btn-primary" onClick={onSearch}>Search</button></div>
+                            <button className="btn btn-primary" onClick={onSearch}>{loading ? 'searching...':'search'}</button></div>
                         </div>
                         <div className="row">
                         <div className="table table-bordered">
-                            <table>
+                                {error ? (<div className="alert alert-danger">Error fetching search results.</div>) : searchedBlogs.length === 0 ? (<div className="alert alert-primary">No blog found.</div>) : (
+                                <table>
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -55,7 +72,7 @@ function SearchBlog() {
                                     <tbody>
                                         <SearchBlogItems searchedBlogs={searchedBlogs} />
                                 </tbody>
-                            </table>
+                            </table>)}
                         </div>
                         </div>
                     </div>
