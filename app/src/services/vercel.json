@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/"
+      }
+    ],
+    "env": {
+      "DATABASE_URL": "mysql://avnadmin:AVNS_-Vp8-4Gx90jNKvLJrEU@blogdb-sourabhsrh007-13fe.g.aivencloud.com:15503/defaultdb?ssl-mode=REQUIRED",
+      "ANOTHER_ENV_VARIABLE": "value"
+    }
+  }

@@ -2,11 +2,11 @@ const mysql = require('mysql2');
 
 // Create the connection pool. The pool-specific settings are the defaults
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'D4-sourabh-83871',
-  port:3306,
-  password: 'manager',
-  database: 'airbnb_db',
+  host: 'blogmysqldb-sourabhsrh007-13fe.g.aivencloud.com',
+  user: 'avnadmin',
+  port:15503,
+  password: 'AVNS_-Vp8-4Gx90jNKvLJrEU',
+  database: 'defaultdb',
   waitForConnections: true,
   connectionLimit: 10,
   maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
