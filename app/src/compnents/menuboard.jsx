@@ -6,19 +6,23 @@ function MenuBoard() {
     const onLogout = () => {
         sessionStorage.removeItem('token');
         toast.success('Successfully logged out.')
-        navigate('/login')
+        navigate('/login');
     }
+
     return (
-        <div>
-            <Link className='me-3' to='/viewMyBlogs'>My blogs</Link><br />
-            <Link className='me-3' to='/home'>All blogs</Link><br />
-                    <Link className='me-3' to='/addCategory'>Add Category</Link><br />
-                    <Link className='me-3' to='/showCategories'>Show Categories</Link><br />
-                    <Link className='me-3' to='/createblog'>Add Blog</Link><br />
-                    <Link className='me-3' to='/searchBlog'>Search Blogs</Link><br />
-            <button className='btn btn-success' onClick={onLogout}>Logut</button><br />
-            </div>
+        <div className="p-4 bg-light rounded shadow-sm">
+            <h4 className="mb-4 text-dark">Menu</h4>
+            <nav className="nav flex-column">
+                <Link className="nav-link active" to="/viewMyBlogs">My Blogs</Link>
+                <Link className="nav-link" to="/home">All Blogs</Link>
+                <Link className="nav-link" to="/addCategory">Add Category</Link>
+                <Link className="nav-link" to="/showCategories">Show Categories</Link>
+                <Link className="nav-link" to="/createblog">Add Blog</Link>
+                <Link className="nav-link" to="/searchBlog">Search Blogs</Link>
+            </nav>
+            <button className="btn btn-danger mt-4 w-100" onClick={onLogout}>Logout</button>
+        </div>
     )
 }
-export default MenuBoard;
 
+export default MenuBoard;

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import AllBlogItems from '../compnents/allBlogItems';
-import MenuBoard from '../compnents/menuboard';
 import { getAllBlogs } from '../services/blog';
 import { toast } from 'react-toastify';
+import MenuBoard from '../compnents/menuboard';
+import AllBlogItems from '../compnents/allBlogItems'
 function Home() {
     const [allBlogs, setAllBlogs] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -10,7 +10,7 @@ function Home() {
 
     useEffect(() => {
         setLoading(true);
-        setError(null)
+        setError(null);
         const fetchAllBlogs = async () => {
             try {
                 const response = await getAllBlogs();
@@ -24,19 +24,24 @@ function Home() {
             }
         };
         fetchAllBlogs();
-    }, [])
+    }, []);
 
     return (
-        <div>
-            <h3 style={{ textAlign: 'center' }}>Blogging App</h3>
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-4" style={{ textAlign: 'center' }}>
-                        <MenuBoard />
-                    </div>
-                    <div className="col">
-                        {loading ? (<h1>Loading...</h1>) : error ? (<div className='alert alert-danger'>{error}</div>) : allBlogs.length === 0 ? (<div className='alert alert-success'>No blog data found.</div>) : (<div className="table table-bordered">
-                            <table>
+        <div className="d-flex flex-column vh-100">
+            <h3 className="heading p-3">Home</h3>
+            <div className="d-flex flex-grow-1">
+                <div className="menu-board col-2">
+                    <MenuBoard/>
+                </div>
+                <div className="table-responsive col p-3 overflow-auto">
+                    {loading ? (
+                        <h1>Loading...</h1>
+                    ) : error ? (
+                        <div className='alert alert-danger'>{error}</div>
+                    ) : allBlogs.length === 0 ? (
+                        <div className='alert alert-success'>No blog data found.</div>
+                    ) : (
+                            <table className="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -48,13 +53,11 @@ function Home() {
                                     <AllBlogItems allBlogs={allBlogs} />
                                 </tbody>
                             </table>
-                        </div>)}
-
-                    </div>
+                    )}
                 </div>
             </div>
         </div>
-    )
+    );
 }
-export default Home;
 
+export default Home;

@@ -7,10 +7,10 @@ function MyBlogItems({ myblogs,onDelete }) {
         {
             myblogs.map((blog) => (
                 <tr key={blog.blog_id}>
-                    <td>{blog.blog_id}</td>
-                    <td><Link to={`/viewBlogDetails/${blog.blog_id}`}>{blog.blog_title}</Link></td>
-                    <td>{blog.category_title}</td>
-                    <td><Action blogId={blog.blog_id} onDelete={onDelete} /></td>
+                    <td style={{width:"10%"}}>{blog.blog_id}</td>
+                    <td style={{width:"30%"}}><Link to={`/viewBlogDetails/${blog.blog_id}`}>{blog.blog_title}</Link></td>
+                    <td style={{width:"20%"}}>{blog.category_title}</td>
+                    <td style={{width:"10%"}}><Action blogId={blog.blog_id} onDelete={onDelete} /></td>
                 </tr>
             ))
             }
