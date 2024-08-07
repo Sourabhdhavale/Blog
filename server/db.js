@@ -6,7 +6,7 @@ const pool = mysql.createPool({
   user: 'avnadmin',
   port:15503,
   password: 'AVNS_-Vp8-4Gx90jNKvLJrEU',
-  database: 'defaultdb',
+  database: 'blog_db',
   waitForConnections: true,
   connectionLimit: 10,
   maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
