@@ -52,9 +52,9 @@ app.use((request, response,next) => {
   }
 })
 // add the routes
-const userRouter = require('./routes/user')
-const categoryRouter = require('./routes/category')
-const blogRouter = require('./routes/blogs')
+const userRouter = require('./router/user')
+const categoryRouter = require('./router/category')
+const blogRouter = require('./router/blogs')
 
 app.use('/user', userRouter)
 app.use('/category', categoryRouter)
