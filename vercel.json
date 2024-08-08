@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "app/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "app/build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/app/build/$1"
+    }
+  ],
+  "env": {
+    "DATABASE_URL": "mysql://avnadmin:AVNS_II_74P6nqsSE1SvR6hM@blog-db-sourabhsrh007-13fe.g.aivencloud.com:15503/defaultdb?ssl-mode=REQUIRED",
+    "ANOTHER_ENV_VARIABLE": "value"
+  }
+}
