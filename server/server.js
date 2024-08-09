@@ -1,14 +1,13 @@
+require('dotenv').config();
 const express = require('express')
 const cors = require('cors')
 const config = require('./config')
 const utils = require('./utils')
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 const app = express()
-app.use(cors({
-  origin: 'https://blog-ashy-sigma-92.vercel.app/',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors());
 app.use(express.json())
 
 app.use((request, response,next) => {

@@ -1,6 +1,6 @@
 const mysql = require('mysql2');
 
-// Create the connection pool using environment variables
+// // Create the connection pool using environment variables
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -19,5 +19,6 @@ const pool = mysql.createPool({
 module.exports = {
   pool,
 };
+// 
 
 
