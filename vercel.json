@@ -1,8 +1,33 @@
 {
-  "rewrites": [
+  "version": 2,
+  "builds": [
+    {
+      "src": "server/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "app/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "app/build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/server.js"
+    },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/app/build/index.html"
     }
-  ]
+  ],
+  "env": {
+    "DB_HOST": "blog-db-sourabhsrh007-13fe.g.aivencloud.com",
+    "DB_USER": "avnadmin",
+    "DB_PORT": "15503",
+    "DB_PASSWORD": "AVNS_II_74P6nqsSE1SvR6hM",
+    "DB_NAME": "defaultdb"
+  }
 }
