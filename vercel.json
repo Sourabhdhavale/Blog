@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "/",
+      "src": "./server.js",
       "use": "@vercel/node"
     }
   ],
@@ -11,7 +11,8 @@
       "src": "/(.*)",
       "dest": "/"
     }
-  ],
+  ]
+,
   "env": {
     "DB_HOST": "blog-db-sourabhsrh007-13fe.g.aivencloud.com",
     "DB_USER": "avnadmin",
