@@ -7,9 +7,9 @@ const jwt = require('jsonwebtoken');
 
 const app = express()
 app.use(cors({
-  origin: 'https://client-sepia-seven.vercel.app', 
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: 'https://client-sepia-seven.vercel.app',
+  methods: 'GET,POST,PUT,DELETE,OPTIONS',
+  allowedHeaders: 'Content-Type, Authorization, token',
 }));
 app.use(express.json())
 
