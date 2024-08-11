@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express')
 const cors = require('cors')
-const config = require('../config')
-const utils = require('../utils')
+const config = require('./config')
+const utils = require('./utils')
 const jwt = require('jsonwebtoken');
 
 const app = express()
@@ -54,9 +54,9 @@ app.use((request, response,next) => {
   }
 })
 // add the routes
-const userRouter = require('../router/user')
-const categoryRouter = require('../router/category')
-const blogRouter = require('../router/blogs')
+const userRouter = require('./router/user')
+const categoryRouter = require('./router/category')
+const blogRouter = require('./router/blogs')
 
 app.use('/user', userRouter)
 app.use('/category', categoryRouter)
