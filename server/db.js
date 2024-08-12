@@ -15,17 +15,17 @@ const pool = mysql.createPool({
 module.exports = {
   pool,
 };
-// 
+
 
 // const mysql = require('mysql2');
-// require("dotenv").config();
+// // require("dotenv").config();
 // // // Create the connection pool using environment variables
 // const pool = mysql.createPool({
 //   host: 'localhost',
 //   user: 'D4-sourabh-83871',
 //   port: '3306',
 //   password: 'manager',
-//   database: 'blog_db',
+//   database: 'airbnb_db',
 //   waitForConnections: true,
 //   connectionLimit: 10,
 //   queueLimit: 0,

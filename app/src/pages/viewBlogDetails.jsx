@@ -38,7 +38,7 @@ function ViewBlogDetails() {
                 <div className="col p-3">
                     <div className="row mb-3 align-items-center">
                         <div className="col-2">
-                            <label htmlFor="blogId">Blog ID:</label>
+                            {/* <label htmlFor="blogId">Blog ID:</label> */}
                         </div>
                         <div className="col">
                             <input
@@ -47,36 +47,23 @@ function ViewBlogDetails() {
                                 className="form-control"
                                 value={blogId || ''}
                                 readOnly
+                                hidden
                             />
                         </div>
                     </div>
                     <div className="row mb-3 align-items-center">
-                        <div className="col-2">
+                        {/* <div className="col-2">
                             <label htmlFor="blogTitle">Blog Title:</label>
-                        </div>
+                        </div> */}
                         <div className="col">
-                            <input
-                                id="blogTitle"
-                                type="text"
-                                className="form-control"
-                                value={blog.title || ''}
-                                readOnly
-                            />
+                          <h1 style={{textAlign:"center"}}>{blog.title || ''}</h1>
                         </div>
                     </div>
                     <div className="row mb-3">
-                        <div className="col-2">
+                        {/* <div className="col-2">
                             <label htmlFor="blogContent">Blog Content:</label>
-                        </div>
-                        <div className="col">
-                            <textarea
-                                id="blogContent"
-                                className="form-control"
-                                rows="10"
-                                value={blog.content || ''}
-                                readOnly
-                            />
-                        </div>
+                        </div> */}
+                        <p>{blog.content || ''}</p>
                     </div>
                     <div className="row">
                         <div className="col-2">

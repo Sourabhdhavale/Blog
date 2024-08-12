@@ -12,7 +12,7 @@ export async function createBlog(title, content, userId, categoryId) {
   }
 
   const response = await axios.post(`${config.url}/blog/createBlog`, body,{ headers:{token,}})
-  console.log("Under axios blog service:"+response)
+  console.log("Under axios blog service:"+JSON.stringify(response))
   return response.data;
 } 
 
